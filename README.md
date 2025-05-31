@@ -16,5 +16,5 @@
 
 ## Install
 ```
-pastebin run UzGHLbNC
+https://pastebin.com/GfS0Hxhf
 ```
