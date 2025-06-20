@@ -15,6 +15,7 @@
 * Turtle follow (with GPS) and turtle come to you (without GPS)
 
 ## Install
+To install run
 ```
-https://pastebin.com/GfS0Hxhf
+pastebin run GfS0Hxhf
 ```
