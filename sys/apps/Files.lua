@@ -335,7 +335,7 @@ function Browser:hasMarked()
 	end
 	return Util.size(marked) > 0
 end
-
+local filecounter = 0
 function Browser:eventHandler(event)
 	local file = self.grid:getSelected()
 
@@ -344,6 +344,13 @@ function Browser:eventHandler(event)
 
 	elseif event.type == 'edit' and file then
 		self:run('edit', file.name)
+
+	elseif event.type == 'file_transfer' then
+		local file = fs.open(self.dir.name .. '/' .. event.name, "wb")
+		file.write(event.text)
+		file.close()
+		self:updateDirectory(self.dir)
+		self:setStatus('File Uploaded')
 
 	elseif event.type == 'cedit' and file then
 		self:run('cedit', file.name)
