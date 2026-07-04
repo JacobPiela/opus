@@ -122,7 +122,7 @@ function tab:updateInfo()
 	local info, percent = getDriveInfo(selected and selected.name or self.drives.values[1].name)
 	self.infos:setValues(info)
 	self.progress.value = percent
-	self.percentage.value = ('%#3d%%'):format(percent)
+	self.percentage.value = ('%3d%%'):format(percent)
 	self.icon.image = NFT.parse(NftImages[info[1].value] or NftImages.blank)
 	self:draw()
 end

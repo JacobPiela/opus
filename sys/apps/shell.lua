@@ -566,7 +566,6 @@ local function shellRead(history)
 
 	while true do
 		local event, p1, p2, p3 = os.pullEventRaw()
-
 		local ie = Input:translate(event, p1, p2, p3)
 		if ie then
 			if ie.code == 'scroll_up' and terminal.scrollUp then
@@ -629,6 +628,18 @@ local function shellRead(history)
 			entry.width = term.getSize() - 3
 			entry:updateScroll()
 			redraw()
+		elseif event == 'file_transfer' then
+			print()
+			for _, file in ipairs(p1.getFiles()) do
+				write("Uploading file...")
+				local handle = fs.open(shell.dir() .. '/' .. file.getName(), "wb")
+				handle.write(file.readAll())
+				handle.close()
+				file.close()
+				write("Done")
+			end
+			entry.value = ''
+			break
 		end
 	end
 

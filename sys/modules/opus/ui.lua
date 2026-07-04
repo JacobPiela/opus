@@ -141,13 +141,27 @@ function UI:init()
 			self:emitEvent({ type = 'paste', text = text, ie = ie })
 			self:getActivePage():sync()
 		end,
+
+		file_transfer = function(_, files)
+			pcall(function()
+				for _, file in ipairs(files.getFiles()) do
+						local size = file.seek("end")
+						file.seek("set", 0)
+						local text = file.readAll()
+						local name = file.getName()
+						self:emitEvent({ type = 'file_transfer', text = text, name = name, size = size})
+						self:getActivePage():sync()
+						file.close()
+				end
+			end)
+		end,
 	}
 
 	-- use 1 handler to single thread all events
 	Event.on({
 		'char', 'key_up', 'key', 'term_resize', 'monitor_resize',
 		'mouse_scroll', 'monitor_touch', 'mouse_click',
-		'mouse_up', 'mouse_drag', 'paste' },
+		'mouse_up', 'mouse_drag', 'paste', 'file_transfer' },
 		function(event, ...)
 			handlers[event](event, ...)
 		end)
